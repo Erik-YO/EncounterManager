@@ -1,0 +1,37 @@
+{
+  "maxw": 1147,
+  "maxh": 783,
+  "mincells": 14,
+  "background": "imgs/backgrounds/forest2.jpg",
+  "object": [],
+  "player": [
+    {
+      "x": 5,
+      "y": 6,
+      "img": "imgs/Player1.jpg"
+    },
+    {
+      "x": 4,
+      "y": 6,
+      "img": "imgs/Player2.jpg"
+    },
+    {
+      "x": 2,
+      "y": 5,
+      "img": "imgs/Player3.png"
+    }
+  ],
+  "mob": [
+    {
+      "x": 12,
+      "y": 8,
+      "img": "imgs/enemies/Enemy1.jpg"
+    },
+    {
+      "x": 8,
+      "y": 2,
+      "img": "imgs/bichos/Enemy2.webp"
+    }
+  ],
+  "fullImage": false
+}
