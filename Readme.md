@@ -3,7 +3,9 @@
 
 A simple visualization and creation tool for TTRPG encounters implemented with Pygame.
 
-Tested on python 3.10.9
+Loosely tested on python 3.10.9
+
+_Note: since the last commit, this repository has suffered a almost complete rework which has made the format uncompatible with the last version._
 
 ## Features
 
@@ -21,108 +23,64 @@ It supports:
   - ...
 - Static background image
 
-
-
-# Use
+## Usage
 
 _Note: the pyw extension makes so that it can be executed without a terminal popping up._
-That's it, the rest can 
 
-## For creation
-
+First, install the requirements:
 ```
-python creator.pyw
+python -m pip install -r requirements.txt
 ```
 
-
-## For terminal input instead
-
-This is mostly for testing purposes. It only supports visualization.
-
+Then, run the code:
 ```
-python310 terminalvisual.py -bg imgs/backgrounds/barco.jpg -mw 600 -mh 800 -c 11 -obj "imgs/tripulacion/Lepto Silgoy.jpg" imgs/tripulacion/sailor.jpg imgs/tripulacion/sailor.jpg -p imgs/Mokba.png imgs/Isaias.jpg -m imgs/Noah.jpg
+python main.py
 ```
 
-```
-python310 terminalvisual.py -fi -bg imgs/backgrounds/bg1.jpg -mw 1400 -mh 800 -c 13 -p imgs/p1.png imgs/p2.jpg imgs/p3.jpg -m imgs/mobs/e1.png imgs/mobs/e2.png
-```
+And that's it. The default location for images and encounter files is the directory `~/.encountermanager/`.
 
-```
-python310 terminalvisual.py -bg imgs/backgrounds/bg2.jpg -mw 700 -mh 700 -c 10 -p imgs/p1.jpg -m imgs/mobs/e1.png
-```
-
-Using a configuration file:
-
-```
-python310 terminalvisual.py -f encounters/barco.json
-python310 terminalvisual.py -f encounters/forest.config
-```
-
-barco.config
-```
-maxw = 600
-maxh = 800
-mincells = 11
-background = imgs/backgrounds/barco.jpg
-
-object = imgs/tripulacion/Lepto Silgoy.jpg
-object = imgs/tripulacion/sailor.jpg
-object = imgs/tripulacion/sailor.jpg
-
-player = imgs/Mokba.png
-player = imgs/Isaias.jpg
-
-mob = imgs/Noah.jpg
-mob = imgs/bichos/shadow.jpg
-
-fullImage = false
-```
-
-barco.json
-```
-{
-    "maxw": 600,
-    "maxh": 800,
-    "mincells": 11,
-    "background": "imgs/backgrounds/barco.jpg",
-    "object": [
-        "imgs/tripulacion/Lepto Silgoy.jpg",
-        "imgs/tripulacion/sailor.jpg",
-        "imgs/tripulacion/sailor.jpg"
-    ],
-    "player": [
-        "imgs/Mokba.png",
-        "imgs/Isaias.jpg"
-    ],
-    "mob": [
-        "imgs/Noah.jpg"
-    ],
-    "fullImage": false
-}
-```
-
-noah.json
-```
-{
-    "maxw": 700,
-    "maxh": 700,
-    "mincells": 10,
-    "background": "imgs/backgrounds/bg_noah.png",
-    "player": [
-        {
-            "img": "imgs/Noah.jpg",
-            "x": 4,
-            "y": 8
-        }
-    ],
-    "mob": [
-        {
-            "img": "imgs/bichos/shadow.jpg",
-            "x": 4,
-            "y": 1
-        }
-    ]
-}
-```
+From here, you can select a background image for a new encounter or a previously created encounter.
 
 
+### Commands
+
+A list of available commands.
+
+
+| Shortcuts | Methods                |
+| --------- | ---------------------- |
+| B         | change_background      |
+| W         | enlarge_window         |
+| Ctrl + W  | shrink_window          |
+| D         | switch_grid_visibility |
+| G         | reduce_grid            |
+| Ctrl + G  | enlarge_grid           |
+| C         | change_entity_type     |
+| T         | change_creature_team   |
+| S         | change_creature_status |
+| L         | make_entity_larger     |
+| Ctrl + L  | make_entity_smaller    |
+| H         | bring_home             |
+| Ctrl + H  | bring_all_home         |
+| A         | create_creature        |
+| I         | create_item            |
+| Click     | select_entity          |
+| Esc       | deselect_entity        |
+| Click     | move_entity            |
+| Right     | move_entity_right      |
+| Left      | move_entity_left       |
+| Up        | move_entity_up         |
+| Down      | move_entity_down       |
+| Del, Supr | destroy_entity         |
+| Ctrl + Z  | undo                   |
+| Ctrl + Y  | redo                   |
+
+
+WIP:
+- Ctrl + C for copy
+- Ctrl + V for paste
+
+
+## Manual encounter creation and debugging
+
+The encounter files are stored in `.json` format, you can find a couple of examples on the `examples/` directory.

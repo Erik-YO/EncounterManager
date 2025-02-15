@@ -1,39 +1,47 @@
-from typing import Tuple, Iterable
+
+
 from pygame import (
     event, key, mouse,
-    QUIT, KEYDOWN, MOUSEWHEEL, MOUSEBUTTONDOWN, MOUSEBUTTONUP)
+    QUIT, KEYDOWN,
+    MOUSEWHEEL, MOUSEBUTTONDOWN, MOUSEBUTTONUP,
+    DROPFILE)
 
 
-class Input:
+class UserInput:
 
     def __init__(self):
-        self.clicking: Tuple[bool, bool] = (False, False)
-        self.old_clicking: Tuple[bool, bool] = self.clicking
+        self.clicking: tuple[bool, bool] = (False, False)
+        self.old_clicking: tuple[bool, bool] = self.clicking
 
-        self.click: Tuple[bool, bool] = (False, False)
-        self.unclick: Tuple[bool, bool] = (False, False)
+        self.click: tuple[bool, bool] = (False, False)
+        self.unclick: tuple[bool, bool] = (False, False)
 
-        self.old_click: Tuple[bool, bool] = self.click
-        self.old_unclick: Tuple[bool, bool] = self.unclick
+        self.old_click: tuple[bool, bool] = self.click
+        self.old_unclick: tuple[bool, bool] = self.unclick
 
-        self.keypressed: Tuple[str, str, str] = ('', '', '')
-        self.old_keypressed: Tuple[str, str, str] = self.keypressed
+        self.keypressed: tuple[str, str, str] = ('', '', '')
+        self.old_keypressed: tuple[str, str, str] = self.keypressed
 
-        self.mousepos: Tuple[int, int] = (0, 0)
-        self.old_mousepos: Tuple[int, int] = self.mousepos
+        self.mousepos: tuple[int, int] = (0, 0)
+        self.old_mousepos: tuple[int, int] = self.mousepos
 
-        self.wheel: Tuple[int, int] = (0, 0)
-        self.old_wheel: Tuple[int, int] = (0, 0)
+        self.wheel: tuple[int, int] = (0, 0)
+        self.old_wheel: tuple[int, int] = (0, 0)
+
+        self.drop_file: str | None = None
+        self.old_drop_file: str | None = None
 
         self.quit: bool = False
 
     def update(
-            self, click: Tuple[bool, bool],
-            unclick: Tuple[bool, bool],
-            clicking: Tuple[bool, bool],
-            mousePos: Tuple[int, int],
-            wheel: Tuple[int, int],
-            keyPressed: Tuple[str, str, str],
+            self,
+            click: tuple[bool, bool],
+            unclick: tuple[bool, bool],
+            clicking: tuple[bool, bool],
+            mousePos: tuple[int, int],
+            wheel: tuple[int, int],
+            keyPressed: tuple[str, str, str],
+            drop_file: str | None,
             quit: bool):
 
         self.old_clicking = self.clicking
@@ -41,7 +49,8 @@ class Input:
         self.old_unclick = self.unclick
         self.old_keypressed = self.keypressed
         self.old_mousepos = self.mousepos
-        self.old_wheel = wheel
+        self.old_wheel = self.wheel
+        self.old_drop_file = self.drop_file
 
         self.clicking = clicking
         self.click = click
@@ -49,10 +58,11 @@ class Input:
         self.keypressed = keyPressed
         self.mousepos = mousePos
         self.wheel = wheel
+        self.drop_file = drop_file
 
         self.quit = quit
 
-    def fromEvents(self, events: Iterable[event.Event]):
+    def fromEvents(self, events: list[event.Event]):
 
         key_pressed = ('', '', '')
         quit = False
@@ -61,6 +71,7 @@ class Input:
         unclick = [False, False]
         clicking = mouse.get_pressed()
         clicking = (clicking[0], clicking[2])
+        drop_file: str | None = None
 
         for evento in events:
 
@@ -87,11 +98,14 @@ class Input:
                 unclick[0] = not clicking[0]
                 unclick[1] = not clicking[1]
 
+            elif evento.type == DROPFILE:
+                drop_file = evento.file
+
         pos = mouse.get_pos()
 
         self.update(
-            tuple(click), tuple(unclick), clicking,
-            pos, wheel, key_pressed, quit)
+            tuple(click), tuple(unclick), clicking,  # type:ignore
+            pos, wheel, key_pressed, drop_file, quit)  # type:ignore
 
     @property
     def wheelx(self):
@@ -150,7 +164,7 @@ class Input:
         return self.keypressed[2]
 
     def __str__(self) -> str:
-        return f'{self.__class__.__name__}{vars(self)}'
+        return f'{type(self).__name__}{vars(self)}'
 
     def __repr__(self) -> str:
         return str(self)

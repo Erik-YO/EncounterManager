@@ -1,0 +1,1 @@
+{"creatures": [{"img": "not_a_dog.jpg", "x": 6, "y": 4, "team": "enemy"}, {"img": "not_a_dog.jpg", "x": 5, "y": 2, "status": "sleep", "team": "ally"}], "items": [{"img": "backgrounds\\carriage.jpg", "x": 13, "y": 6, "size": 2}], "background": {"img": "backgrounds\\gruta.png", "scale": 0.25325459472656253}, "min_units": 11}
